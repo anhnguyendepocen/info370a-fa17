@@ -1,0 +1,220 @@
+---
+title: "INFO 370A Homework 3"
+output: html_notebook
+---
+# Homework 3: Bayesian Inference & Sampling
+
+Name: **TODO**
+
+The objective of this homework is to practice the mechanics of Bayesian analysis. You will use R and the statistical Rethinking package for your analysis. By the end of this homework, you should feel comfortable setting up, running, sampling for, and interpretting basic Bayesian inference to build models and find posterior probabilities. How fun!
+
+Resources to help you complete this homework:
+
+* [Reading 2.1: Probability Models (especially Ch. 2)](https://docs.google.com/document/d/1daYaEaAo7AVqxITspemGKoJTcundjWoJH8e_CkskMN4/edit)
+* [Reading 2.3: Infering probability distributions from data](https://docs.google.com/document/d/1JVacsJzMCG4tp0TTnEGV8Mb8vcc2vgS9z_EQzj9B0sU/edit)
+* [Code from Lab 2.2](https://github.com/info370/fa17-labs/tree/master/labs/2_2)
+
+```{r setup, include=FALSE}
+library(rethinking)
+?rethinking # run me for documentation on the package!
+set.seed(370) # so everyone's randomness is the same
+
+# If you have not previously installed the "Rethinking" library, uncomment and run the lines below:
+# install.packages(c("coda","mvtnorm","devtools"))
+# library(devtools)
+# devtools::install_github("rmcelreath/rethinking")
+```
+
+
+## 1: Greg or Benji?
+Benji and Greg have become lazier and decided they sometimes wouldn't show up to the office hours. Greg decides he won't show up 15% of the time and Benji decides he won't show up 20% of the time. Say you arrive at office hours and you're heartbroken because don't see an instructor. Now you want to figure out which instructor was supposed to show up so you know who to blame.
+
+### 1.1 **TODO**  Write an expression that represents the posterior probability you are interested in. (replace the "..." in the probability statement below)
+Pr( ... )
+
+### 1.2 **TODO** Calculate the posterior distribution (assume a uniform prior).
+
+```{r}
+# 1.2
+
+```
+
+### 1.3 **TODO** Assume you show up to the same office hours over the next 2 weeks later (so it is the same instructor). You observe that the instructor did not show up the following week but did show up the week after that (but you didn't recognize him because he was dressed like Darth Vader and spoke in a terrible British accent). Given this new information, update your posterior distribution.
+```{r}
+#1.3
+
+```
+
+### 1.4 **TODO** What is the posterior probability that Benji was the flakey instructor?
+
+
+
+
+## 2: Marble Counting
+Suppose there is a bag with 5 marbles in them and each marble can be either blue or white. You reach into the bag and pulls out a marble, note the color, then put it back in the bag and shake it up. The marbles you draw are blue, blue, white. You can assume that each marble we draw from the pag is independent of other draws and the probability of drawing a given color is the same on ever toss.
+
+### 2.1 **TODO**: Write an expression of the posterior probability you are solving for. (replace the "..." in the probability statement below)
+Pr( ... )
+
+### 2.2 **TODO** Compute and plot the grid approximate posterior distribution of the proportion of blue marbles in the bag given the marbles we drew from the bag (size of grid = 6). You can model the marble draws as a binomial distribution (_hint_: Use dbinom, just like in Lab 2.2). You can also assume a uniform prior.
+```{r}
+# define the grid
+size_of_grid <- 6
+
+# define a uniform prior
+
+
+# define a likelihood
+
+
+# calculate the posterior
+
+
+# plot the posterior probability. Ensure the axes are labeled and are meaningful and give your plot a title.
+
+```
+
+### 2.3 **TODO**: What is the posterior probability that 2 out of 5 marbles are blue?
+
+### 2.4 **TODO**: What is the maximum a posteriori (MAP) estimate for this posterior probability? (_hint_: `which.max` can help you)
+
+```{r}
+# show computations for 2.3-2.4 here
+
+#2.3
+
+
+#2.4
+
+```
+### 2.5 **TODO**: Write a sentence or two interpreting the MAP estimate.
+
+
+
+## 3: Strange friend, strange coins
+
+Your friend has 3 coins. Each coin has 2 sides and each side is either heads or tails. One coin has 2 heads. The second coin has 1 heads and 1 tails. The third coin has 2 tails. Now suppose your friend puts the 3 coins in a bag and shakes the bag up. You reach into the bag and pull out a coin and place it flat on the table. A tails shows up but you don't know what's on the other side.
+
+### 3.1 **TODO**: Show that the probability of the other side being tails is 2/3. Use the counting method (Ch 2.2) to approach this problem. (_hint_: start by thinking of all the possible outcomes)
+```{r}
+# 3.1
+
+```
+
+### 3.2 **TODO**: Now suppose your friend puts the coin we drew back in the bag. Your friend then starts getting a little crazy and adds 2 new coins: one new coin has 1 heads, 1 tails. The other new coin has 2 heads. You draw a coin out of this bag of 5 coins and place it on the table. You see that 1 side is heads. 
+What is the probability the other side is also heads? (_hint_: The probability is > 0.5)
+```{r}
+#3.2
+
+```
+
+For 3.3 & 3.4: Now your friend takes out a bag of 3 coins with the same sides as the bag in 3.1 (2 heads, 1 head/1 tail, 2 tails). You find out that for these new coins, the head side of the coin is heavier! After spending too much time experimenting, you conclude that for every way to pull the coin w/ 2 tails out of the bag, there are 3 ways to pull the coin with 1 head/1 tail and 4 ways to pull the coin with 2 heads.
+
+### 3.3 **TODO**: When calculating the posterior distribution of the above example, do the prior and likelihoods change compared to 3.1? Explain why or why not.
+
+
+### 3.4 **TODO** You draw a coin from the bag of 3 weighted coins and see 1 side is heads. Show the probability that the other side is also heads is 0.72.
+```{r}
+# 3.4
+
+```
+
+
+
+### 4: Whole world in my hands 
+
+We are given the globe of an unknown planet and we want to figure out what proportion of it is water. We did all of out readings for class, so we think to toss the globe in the air and see if water is on top when it lands. We have no previous knowledge of the proportion of the planet that is water. We toss it up 12 times and see water on top 3 times and model this observation as a binomial distribution. 
+
+### 4.1 Use a grid approximation (size of grid: 1000) to create a posterior distribution of what proportion of this unknown planet is water.
+```{r}
+# 4.1
+
+```
+
+### 4.2 **TODO** What are the uses of sampling from a distribution?
+
+
+### 4.3 **TODO** Draw 10,000 samples from the posterior with replacement (_hint_: check out the `sample` method)
+```{r}
+# 4.3
+
+```
+
+Using the *samples* from 4.2 to answer the following questions:
+### 4.4: How much posterior probability lies below p = 0.3 ? Write a sentence interpreting what this posterior probability means in the context of this question.
+
+### 4.5: How much posterior probability lies between p=0.3 and p=0.7?
+
+### 4.6: 20% of the posterior probability lies above which value of p?
+
+### 4.7: Which values of p contain the narrowest interval equal to 80% of the posterior probability? (_hint_: check out `HPDI`)
+
+```{r}
+# Code for 4.4-7 goes here
+
+#4.4
+
+
+#4.5
+
+
+#4.6
+
+
+#4.7
+
+```
+
+## 5 One-Two Babies for You
+We now look at data on the gender of babies for 200 families that each have 2 children. `birth1` shows the sex of their 1st child (1=male, 0=female) and `birth2` shows the sex of the 2nd child.
+
+### 5.1 **TODO** Use grid approximation (grid size = 1000) to compute the posterior distribution of the birth of a boy. Assume equal priors. Plot the posterior distribution (y) against the grid (x).
+```{r}
+data(homeworkch3)
+birth1
+birth2
+
+grid_size = 1000
+
+```
+
+### 5.2 **TODO** What parameter maximizes the posterior probability?
+
+```{r}
+# 5.2 
+
+```
+
+
+### 5.3 **TODO** Using the `sample` function, draw 10,000 random parameters value from the posterior distribution.
+```{r}
+# 5.3
+
+```
+
+Our model assumes that the sex of the first and second births are independent. Let's investigate this assumption by focusing on second births that follow the birth of a girl.
+
+### 5.4 **TODO** How many of the first births were girls? Given that the first birth is female, how many of the 2nd births were male?
+```{r}
+# 5.4
+
+```
+
+
+### 5.5 **TODO** Use the sample function to simulate 10,000 replications of N births (where N is the number of first births being girls, as calculated in 5.3). You should end up with a vector of length 10,000 where each value is a count of the number of boys out of N births.
+```{r}
+# 5.5
+
+```
+
+### 5.6 **TODO** How much of the posterior probability lies above the number of boys as second births given a girl as a first birth (calculated in 5.3)?
+```{r}
+# 5.6
+
+```
+
+### 5.6 **TODO** Given the posterior probability, do you believe our assumption that the sex of the first and second births are independent? Why?
+
+
+### 6 **TODO: How long did this assignment take you (including time spent working on this in class)?
+
